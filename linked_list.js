@@ -31,6 +31,17 @@ class LinkedList {
    */
   push(val) {
     // TODO
+    let newNode = new Node(val)
+    if (this.length === 0) {
+      this.head = newNode
+    } else {
+      let h = this.head
+      while (h.next != null) {
+        h = h.next
+      }
+      h.next = newNode
+    }
+    this.length++
   }
 
   /**
@@ -41,6 +52,19 @@ class LinkedList {
    */
   insert(i, val) {
     // TODO
+    if (this.length <= i) {
+      this.push(val)
+    } else {
+      let pre = this.head
+      for (let index = 1; index < i - 1; index++) {
+        pre = pre.next
+      }
+      let curr = pre.next
+      let newNode = new Node(val)
+      pre.next = newNode
+      newNode.next = curr
+      this.length++
+    }
   }
 
   /**
@@ -49,8 +73,16 @@ class LinkedList {
    * @param val 元素
    * @return 存在时返回其下标, 否则返回 -1
    */
-  find(val) {
+  indexOf(val) {
     // TODO
+    if (this.length === 0) return -1
+    let curr = this.head
+    for (let i = 0; i < this.length; i++) {
+      if (curr.val === val) {
+        return i
+      }
+      curr = curr.next
+    }
     return -1
   }
 
@@ -61,7 +93,25 @@ class LinkedList {
    * @return 成功返回 true, 失败返回 false
    */
   remove(i) {
-    return false
+    if (this.length < i) return false
+    if (i === 0 && this.head) {
+      this.head = this.head.next
+      this.length --
+      return true
+    }
+    let pre = this.head
+    for (let index = 1; index < i; index++) {
+      pre = pre.next
+    }
+    let curr = pre.next
+    if (this.length === i) {
+      pre.next = null
+    } else {
+      let next = curr.next
+      pre.next = next
+    }
+    this.length--
+    return true
   }
 
   /**
@@ -92,26 +142,36 @@ function main() {
   list.push(5)
 
   console.log(list.toString()) // [1, 2, 3, 4, 5]
+  list.insert(1, 8)
+  list.insert(3, 3)
+  list.insert(8, 1)
+  console.log(list.toString())
+  console.log(list.indexOf(8))
+  console.log(list.indexOf(9))
+  console.log(list.indexOf(2))
+  console.log(list.remove(9))
+  console.log(list.remove(0))
+  console.log(list.toString())
 
 
   // a little tips
-  {
-    const list = new LinkedList()
-    let a = new Node(1)
-    let b = new Node(2)
-    let c = new Node(3)
-    let d = new Node(4)
-    let e = new Node(5)
+  // {
+  //   const list = new LinkedList()
+  //   let a = new Node(1)
+  //   let b = new Node(2)
+  //   let c = new Node(3)
+  //   let d = new Node(4)
+  //   let e = new Node(5)
 
-    a.next = b
-    b.next = c
-    c.next = d
-    d.next = e
+  //   a.next = b
+  //   b.next = c
+  //   c.next = d
+  //   d.next = e
 
-    list.head = a
+  //   list.head = a
 
-    console.log(list.toString()) // [1, 2, 3, 4, 5]
-  }
+  //   console.log(list.toString()) // [1, 2, 3, 4, 5]
+  // }
 }
 
 main()
