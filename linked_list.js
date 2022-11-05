@@ -1,3 +1,6 @@
+const assert = require('assert')
+
+
 /**
  * 链表节点
  */
@@ -96,7 +99,7 @@ class LinkedList {
     if (this.length < i) return false
     if (i === 0 && this.head) {
       this.head = this.head.next
-      this.length --
+      this.length--
       return true
     }
     let pre = this.head
@@ -133,45 +136,40 @@ class LinkedList {
 }
 
 
-function main() {
+function test() {
   const list = new LinkedList()
   list.push(1)
   list.push(2)
   list.push(3)
   list.push(4)
   list.push(5)
+  assert.strictEqual(list.toString(), '[1, 2, 3, 4, 5]')
 
-  console.log(list.toString()) // [1, 2, 3, 4, 5]
+
+  // insert
+
   list.insert(1, 8)
+  assert.strictEqual(list.toString(), '[1, 8, 2, 3, 4, 5]')
+
   list.insert(3, 3)
+  assert.strictEqual(list.toString(), '[1, 8, 2, 3, 3, 4, 5]')
+
   list.insert(8, 1)
-  console.log(list.toString())
-  console.log(list.indexOf(8))
-  console.log(list.indexOf(9))
-  console.log(list.indexOf(2))
-  console.log(list.remove(9))
-  console.log(list.remove(0))
-  console.log(list.toString())
+  assert.strictEqual(list.toString(), '[1, 8, 2, 3, 3, 4, 5, 1]')
 
 
-  // a little tips
-  // {
-  //   const list = new LinkedList()
-  //   let a = new Node(1)
-  //   let b = new Node(2)
-  //   let c = new Node(3)
-  //   let d = new Node(4)
-  //   let e = new Node(5)
+  // indexOf
 
-  //   a.next = b
-  //   b.next = c
-  //   c.next = d
-  //   d.next = e
+  assert.strictEqual(list.indexOf(8), 1)
+  assert.strictEqual(list.indexOf(9), -1)
+  assert.strictEqual(list.indexOf(2), 3)
 
-  //   list.head = a
 
-  //   console.log(list.toString()) // [1, 2, 3, 4, 5]
-  // }
+  // remove
+
+  assert.strictEqual(list.remove(9), false)
+  assert.strictEqual(list.remove(8), true)
+  assert.strictEqual(list.toString(), '[1, 2, 3, 3, 4, 5, 1]')
 }
 
-main()
+test()
