@@ -178,8 +178,8 @@ function test() {
   // remove
 
   assert.strictEqual(list.remove(9), false)
-  assert.strictEqual(list.remove(8), true)
-  assert.strictEqual(list.toString(), '[1, 2, 3, 3, 4, 5, 1]')
+  assert.strictEqual(list.remove(8), false)
+  assert.strictEqual(list.toString(), '[1, 8, 2, 3, 3, 4, 5, 1]')
 }
 
 test()
