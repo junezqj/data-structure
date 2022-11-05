@@ -56,7 +56,7 @@ class LinkedList {
       this.push(val)
     } else {
       let pre = this.head
-      for (let index = 1; index < i - 1; index++) {
+      for (let index = 2; index <= i; index++) {
         pre = pre.next
       }
       let curr = pre.next
@@ -100,7 +100,7 @@ class LinkedList {
       return true
     }
     let pre = this.head
-    for (let index = 1; index < i; index++) {
+    for (let index = 2; index <= i; index++) {
       pre = pre.next
     }
     let curr = pre.next
@@ -151,6 +151,8 @@ function main() {
   console.log(list.indexOf(2))
   console.log(list.remove(9))
   console.log(list.remove(0))
+  console.log(list.toString())
+  list.insert(0, 0)
   console.log(list.toString())
 
 
