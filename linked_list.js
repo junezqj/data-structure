@@ -39,7 +39,7 @@ class LinkedList {
       this.head = newNode
     } else {
       let h = this.head
-      while (h.next != null) {
+      while (h.next) {
         h = h.next
       }
       h.next = newNode
@@ -55,7 +55,7 @@ class LinkedList {
    */
   insert(i, val) {
     // TODO
-    if (this.length <= i) {
+    if (this.length < i) {
       this.push(val)
     } else {
       let pre = this.head
@@ -96,8 +96,8 @@ class LinkedList {
    * @return 成功返回 true, 失败返回 false
    */
   remove(i) {
-    if (this.length < i) return false
-    if (i === 0 && this.head) {
+    if (this.length - 1 < i) return false
+    if (i === 0) {
       this.head = this.head.next
       this.length--
       return true
@@ -145,7 +145,6 @@ function test() {
   list.push(5)
   assert.strictEqual(list.toString(), '[1, 2, 3, 4, 5]')
 
-
   // insert
 
   list.insert(1, 8)
@@ -155,31 +154,29 @@ function test() {
   assert.strictEqual(list.toString(), '[1, 8, 2, 3, 3, 4, 5]')
 
   list.insert(8, 1)
-
-  console.log(list.toString())
-  console.log(list.indexOf(8))
-  console.log(list.indexOf(9))
-  console.log(list.indexOf(2))
-  console.log(list.remove(9))
-  console.log(list.remove(0))
-  console.log(list.toString())
-  list.insert(0, 0)
-  console.log(list.toString())
-
   assert.strictEqual(list.toString(), '[1, 8, 2, 3, 3, 4, 5, 1]')
 
   // indexOf
 
   assert.strictEqual(list.indexOf(8), 1)
   assert.strictEqual(list.indexOf(9), -1)
-  assert.strictEqual(list.indexOf(2), 3)
-
+  assert.strictEqual(list.indexOf(1), 0)
+  assert.strictEqual(list.indexOf(3), 3)
 
   // remove
-
   assert.strictEqual(list.remove(9), false)
   assert.strictEqual(list.remove(8), false)
   assert.strictEqual(list.toString(), '[1, 8, 2, 3, 3, 4, 5, 1]')
+  assert.strictEqual(list.remove(0), true)
+  assert.strictEqual(list.toString(), '[8, 2, 3, 3, 4, 5, 1]')
+
+
+  list.insert(0, 0)
+  console.log(list.toString(), '[0, 8, 2, 3, 3, 4, 5, 1]')
+
+  assert.strictEqual(list.indexOf(0), 0)
+  assert.strictEqual(list.indexOf(8), 1)
+
 }
 
 test()
