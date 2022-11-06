@@ -54,20 +54,30 @@ class LinkedList {
    * @param val 元素
    */
   insert(i, val) {
-    // TODO
-    if (this.length < i) {
-      this.push(val)
-    } else {
-      let pre = this.head
-      for (let index = 2; index <= i; index++) {
-        pre = pre.next
-      }
-      let curr = pre.next
-      let newNode = new Node(val)
-      pre.next = newNode
-      newNode.next = curr
+    let newNode = new Node(val)
+
+    // insert to head
+    if (i === 0) {
+      newNode.next = this.head
+      this.head = newNode
       this.length++
+      return
     }
+
+    // insert to tail
+    if (i > this.length) {
+      i = this.length
+    }
+
+    let curr = this.head
+    for (let index = 1; index < i; index++) {
+      curr = curr.next
+    }
+    let next = curr.next
+    curr.next = newNode
+    newNode.next = next
+
+    this.length++
   }
 
   /**
@@ -145,38 +155,47 @@ function test() {
   list.push(5)
   assert.strictEqual(list.toString(), '[1, 2, 3, 4, 5]')
 
+
   // insert
+  list.insert(2, 100)
+  assert.strictEqual(list.toString(), '[1, 2, 100, 3, 4, 5]')
 
-  list.insert(1, 8)
-  assert.strictEqual(list.toString(), '[1, 8, 2, 3, 4, 5]')
+  list.insert(1, 100)
+  assert.strictEqual(list.toString(), '[1, 100, 2, 100, 3, 4, 5]')
 
-  list.insert(3, 3)
-  assert.strictEqual(list.toString(), '[1, 8, 2, 3, 3, 4, 5]')
+  list.insert(0, 100)
+  assert.strictEqual(list.toString(), '[100, 1, 100, 2, 100, 3, 4, 5]')
 
-  list.insert(8, 1)
-  assert.strictEqual(list.toString(), '[1, 8, 2, 3, 3, 4, 5, 1]')
+  list.insert(7, 100)
+  assert.strictEqual(list.toString(), '[100, 1, 100, 2, 100, 3, 4, 100, 5]')
+
+  list.insert(9, 100)
+  assert.strictEqual(list.toString(), '[100, 1, 100, 2, 100, 3, 4, 100, 5, 100]')
+
+  list.insert(1000, 1000)
+  assert.strictEqual(list.toString(), '[100, 1, 100, 2, 100, 3, 4, 100, 5, 100, 1000]')
+
+  assert.strictEqual(list.length, 11)
+
 
   // indexOf
 
-  assert.strictEqual(list.indexOf(8), 1)
-  assert.strictEqual(list.indexOf(9), -1)
-  assert.strictEqual(list.indexOf(1), 0)
-  assert.strictEqual(list.indexOf(3), 3)
+  assert.strictEqual(list.indexOf(3), 5)
+  assert.strictEqual(list.indexOf(100), 0)
+  assert.strictEqual(list.indexOf(1000), 10)
+
 
   // remove
-  assert.strictEqual(list.remove(9), false)
-  assert.strictEqual(list.remove(8), false)
-  assert.strictEqual(list.toString(), '[1, 8, 2, 3, 3, 4, 5, 1]')
+  assert.strictEqual(list.remove(11), false)
+
+  assert.strictEqual(list.remove(5), true)
+  assert.strictEqual(list.toString(), '[100, 1, 100, 2, 100, 4, 100, 5, 100, 1000]')
+
   assert.strictEqual(list.remove(0), true)
-  assert.strictEqual(list.toString(), '[8, 2, 3, 3, 4, 5, 1]')
+  assert.strictEqual(list.toString(), '[1, 100, 2, 100, 4, 100, 5, 100, 1000]')
 
-
-  list.insert(0, 0)
-  console.log(list.toString(), '[0, 8, 2, 3, 3, 4, 5, 1]')
-
-  assert.strictEqual(list.indexOf(0), 0)
-  assert.strictEqual(list.indexOf(8), 1)
-
+  assert.strictEqual(list.remove(list.length - 1), true)
+  assert.strictEqual(list.toString(), '[1, 100, 2, 100, 4, 100, 5, 100]')
 }
 
 test()
